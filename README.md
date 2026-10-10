@@ -82,24 +82,31 @@ stateDiagram-v2
 
 ---
 
-## 🌐 REST API Control
+## 🌐 Standardized REST API Control (`v1`, Port 80)
 
-### 1. Telemetry Status (`GET /api/status`)
+All endpoints require **authentication** (HMAC-SHA256 signature or Bearer token) for physical safety. Responses are wrapped in a standard JSend envelope:
+
+### 1. Telemetry Status (`GET /api/v1/device/status`)
 ```json
 {
-  "activeRole": "washing_machine",
-  "state": "washing",
-  "elapsedSeconds": 14,
-  "valveActive": false,
-  "motorActive": true,
-  "drainActive": false
+  "status": "success",
+  "code": 200,
+  "uptime": 830,
+  "data": {
+    "role": "washing_machine",
+    "state": "washing",
+    "elapsedSeconds": 14,
+    "valveActive": false,
+    "motorActive": true,
+    "drainActive": false
+  }
 }
 ```
 
-### 2. Remote Commands
-Send via authenticated `POST /api/config` or use [`tools/esp_manager.html`](file:///d:/CraftThingy/esp-stuff/tools/esp_manager.html):
+### 2. Remote Commands (`POST /api/v1/device/command`)
+Send authenticated POST command via Python CLI or zero-install browser dashboard [`tools/esp_manager.html`](file:///d:/CraftThingy/esp-stuff/tools/esp_manager.html):
 - **`start`**: Starts wash cycle from beginning.
-- **`stop` / `pause`**: Immediately shuts off all relays.
+- **`interrupt` / `stop` / `pause`**: Immediately shuts off all relays.
 - **`drain`**: Activates emergency drainage.
 
 ---
