@@ -118,6 +118,16 @@ public:
         return json;
     }
 
+    bool isSafeToUpdate() const override {
+        // Safe to update only when machine is completely idle, completed, or in error
+        return (_state == WASHER_IDLE || _state == WASHER_COMPLETED || _state == WASHER_ERROR);
+    }
+
+    void prepareForUpdate() override {
+        // Disengage all valves and motors prior to flash reboot
+        allRelaysOff();
+    }
+
 private:
     uint8_t _valvePin;
     uint8_t _motorPin;
