@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <CraftThingyCore.h>
-#include <controllers/WashingMachineController.h>
+#include "WashingMachineController.h"
 
 // On ESP32:
 // Pin 12: Water inlet valve relay

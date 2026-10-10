@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
-#include "../DeviceController.h"
+#include <CraftThingyCore.h>
 
 enum WasherState {
     WASHER_IDLE,
